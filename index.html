@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+<title>하이타이 예약 v21</title>
+<style>
+:root{--red:#e60012;--brown:#2b2218;--green:#00a884;--navy:#17335c;--line:#d4eee8;--muted:#60736f;--bg1:#effffb;--bg2:#edf8ff;--disabled:#e5e8e8}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,var(--bg1),var(--bg2) 55%,#fbfff7);font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',Arial,sans-serif;color:var(--brown)}
+.app{max-width:430px;margin:0 auto;min-height:100vh;padding:12px 12px 96px}.hero{background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:22px;padding:12px 14px;box-shadow:0 8px 24px rgba(23,107,135,.08);text-align:center}.logo{width:158px;max-width:64%;height:auto;display:block;margin:0 auto 2px}.hero h1{margin:2px 0;font-size:21px;letter-spacing:-1px;color:#25463f}.sub{font-size:13px;color:var(--muted)}.badges{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:8px}.badge{font-size:12px;background:#f4fffc;border:1px solid var(--line);border-radius:999px;padding:5px 9px;color:#27564d}
+.section{background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:20px;margin-top:12px;padding:14px;box-shadow:0 8px 20px rgba(23,107,135,.055)}.section h2{font-size:17px;margin:0 0 11px;color:#183c36}.hint{font-size:13px;color:var(--muted);line-height:1.45}.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.card,.chip,.time{border:1px solid #dfe9e6;background:#fff;border-radius:15px;padding:12px 10px;text-align:center;cursor:pointer;user-select:none}.card b{display:block;font-size:15px;margin-bottom:3px}.card span{font-size:11px;color:#758883}.active{border-color:var(--red)!important;background:#fff5f6!important;box-shadow:0 0 0 2px rgba(230,0,18,.08) inset}.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{font-weight:800;min-width:78px}.priceBox{margin-top:10px;background:#f7fffc;border:1px dashed #b8ddd5;border-radius:14px;padding:10px;font-size:13px;color:#395852;line-height:1.5}.times{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.time{font-size:14px;padding:10px 4px}.time.night{background:#f6fbff}.time.disabled{background:var(--disabled);color:#9aa3a3;text-decoration:line-through;cursor:not-allowed}.input,select{width:100%;height:46px;border:1px solid #dfe9e6;border-radius:14px;padding:0 12px;font-size:16px;background:#fff;color:#222}textarea.input{height:78px;padding-top:10px;resize:none}.row{display:flex;align-items:center;justify-content:space-between;border:1px solid #eef2f0;border-radius:15px;padding:10px 12px;margin-top:8px}.label{font-weight:800}.counter{display:flex;align-items:center;gap:10px}.btnSmall{width:34px;height:34px;border:0;border-radius:10px;background:#eef8f5;font-size:20px}.num{min-width:26px;text-align:center;font-weight:900}.room,.modeToggle{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.modeToggle .chip,.room .chip{flex:1}.personCourse{border:1px solid #e7efed;border-radius:16px;padding:12px;margin-top:10px;background:#fbfffe}.personCourse h3{margin:0 0 9px;font-size:15px;color:#23433d}.selectRow{display:grid;grid-template-columns:1.25fr .75fr;gap:8px}.personPrice{font-size:13px;color:#536b66;margin-top:8px}.summary{white-space:pre-line;line-height:1.6;background:#fbfffe;border:1px solid #e6f0ed;border-radius:16px;padding:12px;font-size:14px}.summary b{color:#17335c}.bottom{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);border-top:1px solid #e3eeee;padding:10px 12px 14px}.bottom-inner{max-width:430px;margin:0 auto;display:flex;gap:10px;align-items:center}.total{flex:1;font-size:12px;color:#657773}.total strong{display:block;color:#e60012;font-size:18px;margin-top:2px}.submit{width:170px;height:52px;border:0;border-radius:16px;background:var(--red);color:#fff;font-size:17px;font-weight:900}.submit:disabled{background:#bdc7c4;color:#eef3f1}.complete{display:none;position:fixed;inset:0;background:rgba(18,30,28,.45);z-index:20;padding:18px}.complete-card{max-width:390px;margin:18vh auto 0;background:#fff;border-radius:24px;padding:24px 20px;text-align:center;box-shadow:0 18px 50px rgba(0,0,0,.2)}.complete h2{margin:0 0 10px;font-size:23px}.complete p{line-height:1.7;color:#53615e}.complete button{width:100%;height:50px;border:0;border-radius:15px;background:#17335c;color:#fff;font-weight:900;font-size:16px}.ver{text-align:center;color:#9aa;font-size:11px;margin-top:10px}.divider{height:1px;background:#edf3f1;margin:12px 0}.stepnote{background:#fff9f0;border:1px solid #f2dfbf;border-radius:14px;padding:9px 10px;font-size:13px;color:#6a4e1f;margin-bottom:10px;line-height:1.45}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="hero"><img class="logo" src="logo.png" alt="하이타이 로고"><h1>하이타이 예약</h1><div class="sub">카카오톡 온라인 예약 접수</div><div class="badges"><span class="badge">11:00~01:30</span><span class="badge">30분 단위</span><span class="badge">예약 후 확인 연락</span></div></div>
+
+  <div class="section"><h2>1. 예약 인원 / 방 세팅</h2><div class="stepnote">먼저 인원을 선택해주세요. 최대 5명까지 예약 가능합니다. 2명 이상이면 성별과 방 세팅을 확인합니다.</div><div class="chips" id="people"></div><div id="genderBox"></div></div>
+
+  <div class="section"><h2>2. 관리 선택</h2><div id="modeArea"></div><div id="sameCourseArea"><div class="grid" id="typeGrid"></div><div style="height:10px"></div><div class="chips" id="durationGrid"></div><div class="priceBox" id="priceBox">관리 종류와 시간을 선택해주세요.</div></div><div id="individualArea"></div></div>
+
+  <div class="section"><h2>3. 날짜 / 시간</h2><input class="input" id="date" type="date"><div style="height:10px"></div><div class="times" id="times"></div><div class="hint" style="margin-top:8px">오늘 기준 지난 시간은 선택할 수 없습니다.</div></div>
+
+  <div class="section"><h2>4. 예약 정보</h2><input class="input" id="phone" type="tel" inputmode="numeric" placeholder="010-0000-0000"><div style="height:9px"></div><textarea class="input" id="memo" placeholder="요청사항이 있으면 적어주세요. 예) 조용한 방, 강도 약하게"></textarea></div>
+  <div class="section"><h2>예약 요약</h2><div class="summary" id="summary"></div></div>
+  <div class="ver">v21 Vercel Gmail 전송 적용</div>
+</div>
+<form name="hitai-booking" method="POST" data-netlify="true" netlify hidden>
+  <input type="hidden" name="form-name" value="hitai-booking">
+  <input name="관리방식"><input name="관리종류"><input name="관리시간"><input name="고객별관리"><input name="1번관리"><input name="2번관리"><input name="3번관리"><input name="4번관리"><input name="5번관리"><input name="예약날짜"><input name="예약시간"><input name="주야간"><input name="인원수"><input name="남성"><input name="여성"><input name="방세팅"><input name="전화번호"><input name="요청사항"><input name="예상금액">
+</form>
+<div class="bottom"><div class="bottom-inner"><div class="total">예상 금액<strong id="total">-</strong></div><button id="submitBtn" class="submit" type="button">예약 신청</button></div></div>
+<div class="complete" id="complete"><div class="complete-card"><h2>하이타이 예약접수 완료</h2><p>예약 신청이 접수되었습니다.<br>확인 후 순차적으로 연락드리겠습니다.<br><br><small>주간 11:00~20:00<br>야간 20:00~01:30<br>접수 내역은 매장 예약메일로 전달되었습니다.</small></p><button id="backBtn">예약 화면으로 돌아가기</button></div></div>
+<script>
+'use strict';
+const data = {
+  '타이 관리': { en: 'THAI MASSAGE', d: [60, 90], p: { 60: [50000, 60000], 90: [60000, 70000] } },
+  '아로마 관리': { en: 'AROMA MASSAGE', d: [60, 90], p: { 60: [60000, 70000], 90: [70000, 80000] } },
+  '타이 & 아로마': { en: 'THAI & AROMA', d: [60, 90], p: { 60: [60000, 70000], 90: [70000, 80000] } },
+  '정통 로미로미': { en: 'LOMI LOMI', d: [60, 80], p: { 60: [60000, 70000], 80: [70000, 80000] } }
+};
+let state = { type: null, duration: null, time: null, people: 1, male: 1, female: 0, room: '각방', courseMode: 'same', persons: [{type:null,duration:null},{type:null,duration:null},{type:null,duration:null},{type:null,duration:null},{type:null,duration:null}] };
+const $ = id => document.getElementById(id);
+function won(n){ return n ? n.toLocaleString() + '원' : '-'; }
+function man(n){ return (n / 10000) + '만원'; }
+function isNight(t){ if(!t) return false; const h = parseInt(t.split(':')[0], 10); return h >= 20 || h <= 1; }
+function unitPrice(type, duration){ if(!type || !duration || !state.time) return 0; return data[type].p[duration][isNight(state.time) ? 1 : 0]; }
+function price(){ if(!state.time) return 0; if(state.people > 1 && state.courseMode === 'individual'){ return state.persons.slice(0,state.people).reduce((sum,p)=>sum+unitPrice(p.type,p.duration),0); } if(!state.type || !state.duration) return 0; return unitPrice(state.type,state.duration) * state.people; }
+function renderPeople(){ const cont = $('people'); cont.innerHTML = [1,2,3,4,5].map(n=>'<div class="chip '+(state.people===n?'active':'')+'" data-people="'+n+'">'+n+'명</div>').join(''); cont.querySelectorAll('[data-people]').forEach(el=>el.addEventListener('click',()=>setPeople(parseInt(el.dataset.people,10)))); }
+function setPeople(n){
+  state.people = n;
+  if(n === 1){
+    state.male = 1;
+    state.female = 0;
+    state.room = '각방';
+    state.courseMode = 'same';
+  } else {
+    // 2명 이상으로 바꾸면 기본값은 항상 "남성 전체 + 각방/일반방"
+    // 손님이 성별을 편하게 조정하고, 커플룸 최대 정원 안내를 표시함
+    state.male = n;
+    state.female = 0;
+    state.room = '각방';
+    if(!state.courseMode) state.courseMode = 'same';
+  }
+  renderAll();
+}
+function changeGender(type, delta){
+  // 남/여 합계는 항상 예약 인원수와 같게 유지
+  // 예: 2명 예약에서 여성 + 를 누르면 남성이 자동으로 1 줄어듦
+  const key = type === 'm' ? 'male' : 'female';
+  const otherKey = type === 'm' ? 'female' : 'male';
+  if(delta > 0){
+    if(state[key] >= state.people || state[otherKey] <= 0) return;
+    state[key] += 1;
+    state[otherKey] -= 1;
+  } else {
+    if(state[key] <= 0 || state[otherKey] >= state.people) return;
+    state[key] -= 1;
+    state[otherKey] += 1;
+  }
+  renderAll();
+}
+
+function personLabel(i){
+  if(i < state.male) return '남성 '+(i+1);
+  return '여성 '+(i - state.male + 1);
+}
+
+function renderGender(){ const multi = state.people > 1; $('genderBox').innerHTML = '<div class="row"><div class="label">남성</div><div class="counter"><button class="btnSmall" type="button" data-g="m" data-d="-1">−</button><div class="num">'+state.male+'</div><button class="btnSmall" type="button" data-g="m" data-d="1">+</button></div></div><div class="row"><div class="label">여성</div><div class="counter"><button class="btnSmall" type="button" data-g="f" data-d="-1">−</button><div class="num">'+state.female+'</div><button class="btnSmall" type="button" data-g="f" data-d="1">+</button></div></div>' + (multi ? '<div class="room"><div class="chip '+(state.room==='각방'?'active':'')+'" data-room="각방">각방 / 일반방</div><div class="chip '+(state.room==='커플룸'?'active':'')+'" data-room="커플룸">커플룸 필요</div></div>' : '') + '<div class="hint">'+(multi ? '합계 '+(state.male+state.female)+'명 / 예약 '+state.people+'명<br>커플룸의 최대 정원은 2명입니다.<br>3인 이상 예약 시 방 배정은 확인 과정에서 안내드립니다.' : '1명 예약은 성별만 확인합니다.')+'</div>'; $('genderBox').querySelectorAll('[data-g]').forEach(btn=>btn.addEventListener('click',()=>changeGender(btn.dataset.g, parseInt(btn.dataset.d,10)))); $('genderBox').querySelectorAll('[data-room]').forEach(el=>el.addEventListener('click',()=>{
+    if(el.dataset.room === '커플룸' && state.people >= 2 && state.male === state.people && state.female === 0){
+      alert('남성 고객만 예약된 경우 커플룸 이용이 제한될 수 있습니다.\n예약 확인 시 안내드립니다.');
+    }
+    state.room = el.dataset.room;
+    renderAll();
+  })); }
+function renderMode(){ const area = $('modeArea'); if(state.people <= 1){ state.courseMode = 'same'; area.innerHTML = ''; return; } area.innerHTML = '<div class="stepnote">인원이 2명 이상입니다. 모두 같은 관리를 받을지, 고객별로 다르게 선택할지 정해주세요.</div><div class="modeToggle"><div class="chip '+(state.courseMode==='same'?'active':'')+'" data-mode="same">같은 관리</div><div class="chip '+(state.courseMode==='individual'?'active':'')+'" data-mode="individual">각자 다르게</div></div>'; area.querySelectorAll('[data-mode]').forEach(el=>el.addEventListener('click',()=>{ state.courseMode = el.dataset.mode; renderAll(); })); }
+function renderType(){ const grid = $('typeGrid'); grid.innerHTML = Object.keys(data).map(k=>'<div class="card '+(state.type===k?'active':'')+'" data-type="'+k+'"><b>'+k+'</b><span>'+data[k].en+'</span></div>').join(''); grid.querySelectorAll('[data-type]').forEach(el=>el.addEventListener('click',()=>{ state.type = el.dataset.type; state.duration = null; renderAll(); })); }
+function renderDuration(){ const box = $('durationGrid'); if(!state.type){ box.innerHTML = '<div class="hint">먼저 관리 종류를 선택해주세요.</div>'; $('priceBox').innerHTML = '관리 종류와 시간을 선택해주세요.'; return; } box.innerHTML = data[state.type].d.map(d=>'<div class="chip '+(state.duration===d?'active':'')+'" data-duration="'+d+'">'+d+'분</div>').join(''); box.querySelectorAll('[data-duration]').forEach(el=>el.addEventListener('click',()=>{ state.duration = parseInt(el.dataset.duration,10); renderAll(); })); if(state.duration){ const p = data[state.type].p[state.duration]; $('priceBox').innerHTML = '선택: <b>'+state.type+' '+state.duration+'분</b><br>주간 <b>'+man(p[0])+'</b> / 야간 <b>'+man(p[1])+'</b>'; } else { $('priceBox').innerHTML = '관리 시간을 선택해주세요.'; } }
+function renderIndividual(){ const area = $('individualArea'); if(!(state.people > 1 && state.courseMode === 'individual')){ area.innerHTML = ''; $('sameCourseArea').style.display = 'block'; return; } $('sameCourseArea').style.display = 'none'; let html = ''; for(let i=0;i<state.people;i++){ const p = state.persons[i]; const label = personLabel(i); const typeOptions = '<option value="">관리 종류</option>' + Object.keys(data).map(k=>'<option value="'+k+'" '+(p.type===k?'selected':'')+'>'+k+'</option>').join(''); const durationOptions = '<option value="">시간</option>' + (p.type ? data[p.type].d.map(d=>'<option value="'+d+'" '+(p.duration===d?'selected':'')+'>'+d+'분</option>').join('') : ''); html += '<div class="personCourse"><h3>'+label+' 고객 관리 선택</h3><div class="selectRow"><select data-person-type="'+i+'">'+typeOptions+'</select><select data-person-duration="'+i+'" '+(!p.type?'disabled':'')+'>'+durationOptions+'</select></div><div class="personPrice">'+(p.type&&p.duration ? label+' · '+p.type+' '+p.duration+'분 · '+(state.time?won(unitPrice(p.type,p.duration)):'시간 선택 후 금액 표시') : label+' 고객의 관리 종류와 시간을 선택해주세요')+'</div></div>'; } area.innerHTML = html; area.querySelectorAll('[data-person-type]').forEach(sel=>sel.addEventListener('change',()=>{ const i = parseInt(sel.dataset.personType,10); state.persons[i].type = sel.value || null; state.persons[i].duration = null; renderAll(); })); area.querySelectorAll('[data-person-duration]').forEach(sel=>sel.addEventListener('change',()=>{ const i = parseInt(sel.dataset.personDuration,10); state.persons[i].duration = sel.value ? parseInt(sel.value,10) : null; renderAll(); })); }
+function timeSlots(){ return ['11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00','22:30','23:00','23:30','00:00','00:30','01:00','01:30']; }
+function todayYMD(){ const n = new Date(); return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0'); }
+function parseYMD(v){ const a = (v || '').split('-').map(x=>parseInt(x,10)); if(a.length !== 3 || a.some(isNaN)) return null; return new Date(a[0], a[1]-1, a[2], 0, 0, 0, 0); }
+function refreshDateLimit(){ const min = todayYMD(); $('date').min = min; if(!$('date').value || $('date').value < min){ $('date').value = min; state.time = null; } }
+function slotDateTime(t){ refreshDateLimit(); const base = parseYMD($('date').value) || new Date(); const [hh,mm] = t.split(':').map(x=>parseInt(x,10)); const d = new Date(base); if(hh <= 4) d.setDate(d.getDate()+1); d.setHours(hh, mm, 0, 0); return d; }
+function isPastDate(){ refreshDateLimit(); return $('date').value < todayYMD(); }
+function isPastTime(t){ return !t || slotDateTime(t).getTime() <= Date.now(); }
+function ensureFutureSlot(showAlert){ refreshDateLimit(); if(!$('date').value){ if(showAlert) alert('예약 날짜를 선택해주세요.'); return false; } if(isPastDate()){ state.time = null; if(showAlert) alert('지난 날짜는 예약할 수 없습니다.'); renderAll(); return false; } if(state.time && isPastTime(state.time)){ state.time = null; if(showAlert) alert('이미 지난 시간은 예약할 수 없습니다. 다시 선택해주세요.'); renderAll(); return false; } return true; }
+function renderTimes(){ refreshDateLimit(); if(state.time && isPastTime(state.time)) state.time = null; const cont = $('times'); cont.innerHTML = timeSlots().map(t=>'<div class="time '+(state.time===t?'active ':'')+(isNight(t)?'night ':'')+(isPastTime(t)?'disabled':'')+'" data-time="'+t+'">'+t+'</div>').join(''); cont.querySelectorAll('[data-time]').forEach(el=>el.addEventListener('click',()=>{ const t = el.dataset.time; if(isPastTime(t)){ alert('이미 지난 시간은 선택할 수 없습니다.'); return; } state.time = t; renderAll(); })); }
+function serviceSummaryLines(){ if(state.people > 1 && state.courseMode === 'individual'){ return state.persons.slice(0,state.people).map((p,i)=>{ let line = personLabel(i)+': '; if(p.type && p.duration){ line += p.type+' '+p.duration+'분'; if(state.time) line += ' · '+won(unitPrice(p.type,p.duration)); } else { line += '선택 필요'; } return line; }).join('\n'); } return state.type && state.duration ? state.type+' '+state.duration+'분 × '+state.people+'명' : '선택 필요'; }
+function bookingText(){ return '인원: '+state.people+'명 · 남 '+state.male+' / 여 '+state.female+(state.people>1?'\n방세팅: '+state.room:'')+'\n관리:\n'+serviceSummaryLines()+'\n일시: '+($('date').value || '날짜 선택')+' '+(state.time || '시간 선택')+(state.time ? ' ('+(isNight(state.time)?'야간':'주간')+')' : '')+'\n전화번호: '+($('phone').value || '미입력')+'\n요청사항: '+($('memo').value || '없음')+'\n예상금액: '+won(price()); }
+function renderSummary(){ $('summary').innerHTML = bookingText().replace(/(관리:|일시:|인원:|방세팅:|전화번호:|요청사항:|예상금액:)/g,'<b>$1</b>'); $('total').textContent = won(price()); validate(); }
+function renderAll(){ renderPeople(); renderGender(); renderMode(); renderType(); renderDuration(); renderIndividual(); renderTimes(); renderSummary(); }
+function formatPhone(){ let digits = $('phone').value.replace(/\D/g,''); if(digits.startsWith('010')) digits = digits.slice(3); digits = digits.slice(0,8); $('phone').value = '010-' + (digits.length <= 4 ? digits : digits.slice(0,4)+'-'+digits.slice(4)); renderSummary(); }
+function courseValid(){ if(state.people > 1 && state.courseMode === 'individual'){ return state.persons.slice(0,state.people).every(p=>p.type && p.duration); } return !!(state.type && state.duration); }
+function validate(){ const ok = !!(courseValid() && state.time && $('date').value && !isPastTime(state.time) && /^010-\d{4}-\d{4}$/.test($('phone').value) && state.male + state.female === state.people); $('submitBtn').disabled = !ok; return ok; }
+async function submitBooking(){ if(!courseValid()) return alert('관리 종류와 시간을 모두 선택해주세요.'); if(!$('date').value) return alert('예약 날짜를 선택해주세요.'); if(!state.time) return alert('예약 시간을 선택해주세요.'); if(!ensureFutureSlot(true)) return; if(state.male + state.female !== state.people) return alert('남성/여성 인원 합계가 예약 인원과 맞아야 합니다.'); if(!/^010-\d{4}-\d{4}$/.test($('phone').value)) return alert('전화번호를 정확히 입력해주세요.\n예) 010-1234-5678'); const individual = state.people > 1 && state.courseMode === 'individual'; const personLines = []; for(let i=0;i<5;i++){ let val = ''; if(i < state.people){ if(individual){ const p = state.persons[i]; val = personLabel(i)+' - '+p.type+' '+p.duration+'분'; } else { val = personLabel(i)+' - '+state.type+' '+state.duration+'분'; } } personLines.push(val); } const payload = {'form-name':'hitai-booking','관리방식':individual?'고객별 개별 선택':'같은 관리','관리종류':individual?'고객별 개별 선택':state.type,'관리시간':individual?'고객별 개별 선택':state.duration+'분','고객별관리':serviceSummaryLines(),'1번관리':personLines[0],'2번관리':personLines[1],'3번관리':personLines[2],'4번관리':personLines[3],'5번관리':personLines[4],'예약날짜':$('date').value,'예약시간':state.time,'주야간':isNight(state.time)?'야간':'주간','인원수':state.people+'명','남성':state.male+'명','여성':state.female+'명','방세팅':state.people>1?state.room:'1명','전화번호':$('phone').value,'요청사항':$('memo').value||'없음','예상금액':won(price())}; Object.entries(payload).forEach(([k,v])=>{ const field = document.forms['hitai-booking'].elements[k]; if(field) field.value = v; }); $('submitBtn').disabled = true; $('submitBtn').textContent = '전송 중...'; try{ const message = Object.entries(payload).map(([k,v])=>k+': '+v).join('\n'); await fetch('https://script.google.com/macros/s/AKfycbz-Ic7tY866_pJ11K1xvVEsDOQRMIrvciIii62Gg3wMMhls5Txw2zKmRhbZZj3X1Fcyvg/exec', { method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify({message:message, payload:payload}) }); $('complete').style.display = 'block'; } catch(e){ alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'); } finally { $('submitBtn').textContent = '예약 신청'; validate(); } }
+function init(){ $('phone').value = '010-'; $('phone').addEventListener('focus',()=>{ if(!$('phone').value.startsWith('010-')) $('phone').value = '010-'; }); $('phone').addEventListener('input',formatPhone); $('date').addEventListener('change',()=>{ state.time = null; renderAll(); }); $('memo').addEventListener('input',renderSummary); $('submitBtn').addEventListener('click',submitBooking); $('backBtn').addEventListener('click',()=>{ $('complete').style.display='none'; window.scrollTo({top:0,behavior:'smooth'}); }); refreshDateLimit(); renderAll(); setInterval(()=>{ const before = $('date').min; refreshDateLimit(); if($('date').min !== before) renderAll(); }, 60000); }
+init();
+</script>
+</body>
+</html>
