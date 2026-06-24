@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-<title>하이타이 예약 v25</title>
+<title>하이타이 예약 v26</title>
 <style>
 :root{--red:#e60012;--brown:#2b2218;--green:#00a884;--navy:#17335c;--line:#d4eee8;--muted:#60736f;--bg1:#effffb;--bg2:#edf8ff;--disabled:#e5e8e8}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,var(--bg1),var(--bg2) 55%,#fbfff7);font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',Arial,sans-serif;color:var(--brown)}
@@ -104,8 +104,7 @@ function refreshDateGuard(){ const dateEl = $('date'); const today = todayStr();
 function isPastDate(){ const dateVal = $('date').value; return !!dateVal && dateVal < todayStr(); }
 function slotDateTime(t){ const dateVal = $('date').value; const base = dateVal ? new Date(dateVal + 'T00:00:00') : new Date(); const [hh,mm] = t.split(':').map(x=>parseInt(x,10)); const d = new Date(base); d.setHours(hh, mm, 0, 0); return d; }
 function isPastTime(t){ if(isPastDate()) return true; const minBookTime = new Date(Date.now() + 20 * 60 * 1000); return slotDateTime(t) < minBookTime; }
-function renderTimes(){ refreshDateGuard(); if(state.time && isPastTime(state.time)) state.time = null; const cont = $('times'); cont.innerHTML = timeSlots().map(t=>'<div class="time '+(state.time===t?'active ':'')+(isNight(t)?'night ':'')+(isPastTime(t)?'disabled':'')+'" data-time="'+t+'">'+t+'</div>').join(''); cont.querySelectorAll('[data-time]').forEach(el=>el.addEventListener('click',()=>{ const t = el.dataset.time; if(isPastTime(t)){ alert('예약은 최소 20분 전부터 가능합니다.
-조금 여유 있는 시간을 선택해주세요.'); return; } state.time = t; renderAll(); })); }
+function renderTimes(){ refreshDateGuard(); if(state.time && isPastTime(state.time)) state.time = null; const cont = $('times'); cont.innerHTML = timeSlots().map(t=>'<div class="time '+(state.time===t?'active ':'')+(isNight(t)?'night ':'')+(isPastTime(t)?'disabled':'')+'" data-time="'+t+'">'+t+'</div>').join(''); cont.querySelectorAll('[data-time]').forEach(el=>el.addEventListener('click',()=>{ const t = el.dataset.time; if(isPastTime(t)){ alert('예약은 최소 20분 전부터 가능합니다.\n조금 여유 있는 시간을 선택해주세요.'); return; } state.time = t; renderAll(); })); }
 function serviceSummaryLines(){ if(state.people > 1 && state.courseMode === 'individual'){ return state.persons.slice(0,state.people).map((p,i)=>{ let line = personLabel(i)+': '; if(p.type && p.duration){ line += p.type+' '+p.duration+'분'; if(state.time) line += ' · '+won(unitPrice(p.type,p.duration)); } else { line += '선택 필요'; } return line; }).join('\n'); } return state.type && state.duration ? state.type+' '+state.duration+'분 × '+state.people+'명' : '선택 필요'; }
 function bookingText(){ return '인원: '+state.people+'명 · 남 '+state.male+' / 여 '+state.female+(state.people>1?'\n방세팅: '+state.room:'')+'\n관리:\n'+serviceSummaryLines()+'\n일시: '+($('date').value || '날짜 선택')+' '+(state.time || '시간 선택')+(state.time ? ' ('+(isNight(state.time)?'야간':'주간')+')' : '')+'\n전화번호: '+($('phone').value || '미입력')+'\n요청사항: '+($('memo').value || '없음')+'\n예상금액: '+won(price()); }
 function renderSummary(){ $('summary').innerHTML = bookingText().replace(/(관리:|일시:|인원:|방세팅:|전화번호:|요청사항:|예상금액:)/g,'<b>$1</b>'); $('total').textContent = won(price()); validate(); }
